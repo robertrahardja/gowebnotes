@@ -1,4 +1,230 @@
+## Why Rest
+
+REST (Representational State Transfer) is a widely adopted architectural style for building web APIs that provides several key benefits for creating scalable, maintainable, and interoperable web services.
+
+### Core Principles and Benefits
+
+**Standardization and Industry Adoption**
+REST provides a standardized approach to building APIs that's universally understood across the industry. This reduces decision-making overhead since you're following established conventions rather than inventing your own patterns.
+
+**Stateless Architecture**
+REST APIs are stateless, meaning each request contains all the information needed to process it. The server doesn't maintain client state between requests, which makes the system:
+
+- More scalable (no session storage overhead)
+- Easier to modify and maintain
+- More resilient to failures
+
+**Client-Server Decoupling**
+REST enforces separation between client and server, allowing them to evolve independently. Your API can serve any type of client - web browsers, mobile apps, IoT devices, or even PlayStation consoles - without modification.
+
+### Practical Advantages
+
+**HTTP Method Semantics**
+REST leverages HTTP methods naturally:
+
+- `GET` for retrieving data
+- `POST` for creating resources
+- `PUT/PATCH` for updates
+- `DELETE` for removal
+
+This creates intuitive, self-documenting APIs where the HTTP method clearly indicates the operation's intent.
+
+**Caching Benefits**
+REST APIs inherit HTTP's built-in caching mechanisms, improving performance through:
+
+- Browser caching
+- CDN caching
+- Proxy server caching
+
+**Uniform Interface**
+All API requests for the same resource follow consistent patterns regardless of the client. For example:
+
+```
+GET /v1/users/42     # Get user 42
+PUT /v1/users/42     # Update user 42
+DELETE /v1/users/42  # Delete user 42
+```
+
+### Resource-Oriented Design
+
+REST encourages thinking in terms of resources rather than actions, leading to cleaner API designs. Resources are typically named with plurals:
+
+```
+GET /v1/posts           # List posts
+POST /v1/posts          # Create a post
+GET /v1/posts/123       # Get specific post
+PUT /v1/posts/123       # Update specific post
+DELETE /v1/posts/123    # Delete specific post
+```
+
+### Hierarchical Resource Relationships
+
+REST handles nested resources elegantly:
+
+```
+GET /v1/posts/123/comments     # Get comments for post 123
+POST /v1/posts/123/comments    # Add comment to post 123
+```
+
+### Why Choose REST Over Alternatives
+
+**Versus GraphQL**: REST is simpler to implement and understand, with better caching capabilities and wider tooling support.
+
+**Versus RPC**: REST provides better discoverability and leverages existing HTTP infrastructure more effectively.
+
+**Versus SOAP**: REST is lighter weight, more flexible, and easier to consume from web browsers and mobile applications.
+
+### Modern Development Benefits
+
+REST APIs work seamlessly with modern development practices:
+
+- Easy integration with frontend frameworks
+- Excellent tooling support (Swagger/OpenAPI documentation)
+- Simple testing with standard HTTP tools
+- Natural fit for microservices architectures
+
+The combination of REST's simplicity, HTTP's ubiquity, and industry-wide adoption makes it an excellent choice for most web API development scenarios. While other approaches may be better for specific use cases, REST provides a solid foundation that balances simplicity with powerful capabilities.
+
+## Why Golang
+
+### Core Language Benefits
+
+**Simple and Fun to Code**
+
+- Go is described as a "fun language to use" with a clean, readable syntax
+- Fast compilation times make development iteration quick and enjoyable
+
+**Performance and Deployment**
+
+- **Compiled nature** makes it very fast and easy to deploy
+- Single binary deployment - just put it in a Docker container and ship to serverless instances
+- No runtime dependencies needed in production
+
+**No Dependency Hell**
+
+- Unlike JavaScript/Node.js ecosystems, Go avoids the complex dependency management issues
+- Cleaner, more predictable dependency resolution
+
+### Excellent for Web Development
+
+**Outstanding Standard Library**
+
+- The `net` and `net/http` packages provide robust, battle-tested foundations for web services
+- Built-in HTTP server capabilities without external dependencies
+- Comprehensive networking primitives
+
+**Superior Concurrency Model**
+
+- Go's goroutines and channels make handling concurrent requests elegant and efficient
+- Perfect for web servers that need to handle many simultaneous connections
+- Built-in concurrency primitives reduce complexity
+
+### Practical Development Advantages
+
+**Fast Compilation**
+
+- Quick build times improve development workflow
+- Immediate feedback during development
+
+**Strong Typing with Simplicity**
+
+- Catches errors at compile time
+- Interfaces provide flexibility without complexity
+- Simple but powerful type system
+
+**Production Ready**
+
+- Designed for building scalable, reliable systems
+- Excellent tooling ecosystem (testing, profiling, etc.)
+- Strong community and library support for web development
+
+### Web-Specific Strengths
+
+The documents show Go excels at:
+
+- **HTTP servers** with built-in routing and middleware support
+- **JSON APIs** with excellent marshaling/unmarshaling
+- **Database connectivity** with clean SQL interfaces
+- **Authentication and security** implementations
+- **Graceful error handling** and recovery
+
+As one document puts it: _"I think you have to choose the tool that is right for the job, and all the tools have their own problems. You just got to choose the tool that has the less problems for the problem that you have."_
+
+For building robust, scalable web APIs, Go provides an excellent balance of simplicity, performance, and powerful built-in capabilities that make it an ideal choice.
+
 ## External Resources
+
+Based on the documents provided, here are all the external resources mentioned:
+
+### Books
+
+- [**The Clean Architecture**](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164) by Robert Martin
+- [**Patterns of Enterprise Application Architecture**](https://www.amazon.com/Patterns-Enterprise-Application-Architecture-Martin/dp/0321127420) by Martin Fowler
+- [**Refactoring**](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599) by Martin Fowler
+
+### Documentation & Specifications
+
+- [**The 12-Factor App**](https://12factor.net/) - Set of 12 principles for building web applications
+- [**REST (Representational State Transfer)**](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) - Original dissertation by Roy Fielding
+- [**Conventional Commits**](https://www.conventionalcommits.org/) - Convention for commit message formatting
+- [**Go documentation**](https://golang.org/doc/) - Official Go language documentation
+- [**Mozilla documentation**](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) - For CORS and web standards
+- [**AWS CORS documentation**](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html) - For CORS best practices
+- [**DigitalOcean OAuth article**](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) - OAuth implementation guide
+- [**SendGrid documentation**](https://docs.sendgrid.com/) - Email service documentation
+- [**Mailtrap documentation**](https://help.mailtrap.io/) - Alternative email service documentation
+
+### Online Resources & Articles
+
+- [**Learn Go with Tests**](https://quii.gitbook.io/learn-go-with-tests/) - Go testing resource
+- [**Three Dots Labs**](https://threedots.tech/) - Repository pattern implementation series
+- **JWT security articles** - Referenced for JWT best practices and vulnerabilities
+- [**"Please Stop Using Local Storage"**](https://dev.to/rdegges/please-stop-using-local-storage-1i04) - Article about JWT storage concerns
+- **Critical vulnerabilities in JWT implementations** - Security considerations
+- [**jwt.io**](https://jwt.io/) - JWT token decoder website
+
+### Tools & Packages
+
+#### Go Packages
+
+- [**Gin**](https://github.com/gin-gonic/gin) / [**Chi**](https://github.com/go-chi/chi) - HTTP routing libraries
+- [**Zap logger**](https://github.com/uber-go/zap) - Uber's logging library
+- [**Go-redis**](https://github.com/go-redis/redis) - Redis client for Go
+- [**Testify**](https://github.com/stretchr/testify) - Testing toolkit
+- [**SQLx**](https://github.com/jmoiron/sqlx) - SQL extensions for Go
+- [**SQL Boiler**](https://github.com/volatiletech/sqlboiler) - Database toolkit
+- [**GORM**](https://gorm.io/) - Go ORM
+- [**Swaggo**](https://github.com/swaggo/swag) - Swagger documentation generator
+- [**Golang-migrate**](https://github.com/golang-migrate/migrate) - Database migration tool
+- [**UUID package**](https://github.com/google/uuid) - From Google for generating UUIDs
+- [**bcrypt**](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Password hashing
+- [**Postgres driver**](https://github.com/lib/pq) - Database driver
+- [**JWT-go v5**](https://github.com/golang-jwt/jwt) - JWT implementation
+
+#### External Services
+
+- [**SendGrid**](https://sendgrid.com/) - Email delivery service
+- [**Mailtrap**](https://mailtrap.io/) - Email testing service
+- [**Twilio**](https://www.twilio.com/) - SMS/communication service
+- [**Supabase**](https://supabase.com/) - Database hosting (free tier mentioned)
+- [**Google Cloud**](https://cloud.google.com/) - Cloud platform for deployment
+  - [Cloud Run](https://cloud.google.com/run)
+  - [Cloud Build](https://cloud.google.com/build)
+  - [Artifact Registry](https://cloud.google.com/artifact-registry)
+  - [Cloud SQL](https://cloud.google.com/sql)
+- [**Redis**](https://redis.io/) - In-memory data store
+- [**PostgreSQL**](https://www.postgresql.org/) - Database system
+
+#### Development Tools
+
+- [**Docker**](https://www.docker.com/) - Containerization
+- [**Docker Compose**](https://docs.docker.com/compose/) - Multi-container orchestration
+- [**GitHub Actions**](https://github.com/features/actions) - CI/CD automation
+- [**Swagger/OpenAPI**](https://swagger.io/) - API documentation
+- [**Autocannon**](https://github.com/mcollina/autocannon) - HTTP benchmarking tool
+- [**Redis Commander**](https://github.com/joeferner/redis-commander) - Redis UI tool
+- [**VS Code**](https://code.visualstudio.com/) - Code editor
+- [**Lazy Git**](https://github.com/jesseduffield/lazygit) - Git CLI tool
 
 ## Development and Deployment Pipeline
 
@@ -44,8 +270,8 @@ flowchart LR
 **Create project structure:**
 
 ```bash
-mkdir gopher-social
-cd gopher-social
+mkdir go-social
+cd go-social
 go mod init social
 ```
 
