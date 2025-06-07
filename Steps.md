@@ -1,25 +1,40 @@
-## Why Rest
+# Go REST API Development Guide
 
-REST (Representational State Transfer) is a widely adopted architectural style for building web APIs that provides several key benefits for creating scalable, maintainable, and interoperable web services.
+## Why REST
+
+REST (Representational State Transfer) is a widely adopted architectural
+style for building web APIs that provides several key benefits for creating
+scalable, maintainable, and interoperable web services.
 
 ### Core Principles and Benefits
 
-**Standardization and Industry Adoption**
-REST provides a standardized approach to building APIs that's universally understood across the industry. This reduces decision-making overhead since you're following established conventions rather than inventing your own patterns.
+#### Standardization and Industry Adoption
 
-**Stateless Architecture**
-REST APIs are stateless, meaning each request contains all the information needed to process it. The server doesn't maintain client state between requests, which makes the system:
+REST provides a standardized approach to building APIs that's universally
+understood across the industry. This reduces decision-making overhead since
+you're following established conventions rather than inventing your own
+patterns.
+
+#### Stateless Architecture
+
+REST APIs are stateless, meaning each request contains all the information
+needed to process it. The server doesn't maintain client state between
+requests, which makes the system:
 
 - More scalable (no session storage overhead)
 - Easier to modify and maintain
 - More resilient to failures
 
-**Client-Server Decoupling**
-REST enforces separation between client and server, allowing them to evolve independently. Your API can serve any type of client - web browsers, mobile apps, IoT devices, or even PlayStation consoles - without modification.
+#### Client-Server Decoupling
+
+REST enforces separation between client and server, allowing them to evolve
+independently. Your API can serve any type of client - web browsers, mobile
+apps, IoT devices, or even PlayStation consoles - without modification.
 
 ### Practical Advantages
 
-**HTTP Method Semantics**
+#### HTTP Method Semantics
+
 REST leverages HTTP methods naturally:
 
 - `GET` for retrieving data
@@ -27,19 +42,24 @@ REST leverages HTTP methods naturally:
 - `PUT/PATCH` for updates
 - `DELETE` for removal
 
-This creates intuitive, self-documenting APIs where the HTTP method clearly indicates the operation's intent.
+This creates intuitive, self-documenting APIs where the HTTP method clearly
+indicates the operation's intent.
 
-**Caching Benefits**
-REST APIs inherit HTTP's built-in caching mechanisms, improving performance through:
+#### Caching Benefits
+
+REST APIs inherit HTTP's built-in caching mechanisms, improving performance
+through:
 
 - Browser caching
 - CDN caching
 - Proxy server caching
 
-**Uniform Interface**
-All API requests for the same resource follow consistent patterns regardless of the client. For example:
+#### Uniform Interface
 
-```
+All API requests for the same resource follow consistent patterns regardless
+of the client. For example:
+
+```http
 GET /v1/users/42     # Get user 42
 PUT /v1/users/42     # Update user 42
 DELETE /v1/users/42  # Delete user 42
@@ -47,9 +67,10 @@ DELETE /v1/users/42  # Delete user 42
 
 ### Resource-Oriented Design
 
-REST encourages thinking in terms of resources rather than actions, leading to cleaner API designs. Resources are typically named with plurals:
+REST encourages thinking in terms of resources rather than actions, leading
+to cleaner API designs. Resources are typically named with plurals:
 
-```
+```http
 GET /v1/posts           # List posts
 POST /v1/posts          # Create a post
 GET /v1/posts/123       # Get specific post
@@ -61,18 +82,21 @@ DELETE /v1/posts/123    # Delete specific post
 
 REST handles nested resources elegantly:
 
-```
+```http
 GET /v1/posts/123/comments     # Get comments for post 123
 POST /v1/posts/123/comments    # Add comment to post 123
 ```
 
 ### Why Choose REST Over Alternatives
 
-**Versus GraphQL**: REST is simpler to implement and understand, with better caching capabilities and wider tooling support.
+**Versus GraphQL**: REST is simpler to implement and understand, with better
+caching capabilities and wider tooling support.
 
-**Versus RPC**: REST provides better discoverability and leverages existing HTTP infrastructure more effectively.
+**Versus RPC**: REST provides better discoverability and leverages existing
+HTTP infrastructure more effectively.
 
-**Versus SOAP**: REST is lighter weight, more flexible, and easier to consume from web browsers and mobile applications.
+**Versus SOAP**: REST is lighter weight, more flexible, and easier to consume
+from web browsers and mobile applications.
 
 ### Modern Development Benefits
 
@@ -83,56 +107,63 @@ REST APIs work seamlessly with modern development practices:
 - Simple testing with standard HTTP tools
 - Natural fit for microservices architectures
 
-The combination of REST's simplicity, HTTP's ubiquity, and industry-wide adoption makes it an excellent choice for most web API development scenarios. While other approaches may be better for specific use cases, REST provides a solid foundation that balances simplicity with powerful capabilities.
+The combination of REST's simplicity, HTTP's ubiquity, and industry-wide
+adoption makes it an excellent choice for most web API development scenarios.
+While other approaches may be better for specific use cases, REST provides a
+solid foundation that balances simplicity with powerful capabilities.
 
 ## Why Golang
 
 ### Core Language Benefits
 
-**Simple and Fun to Code**
+#### Simple and Fun to Code
 
 - Go is described as a "fun language to use" with a clean, readable syntax
 - Fast compilation times make development iteration quick and enjoyable
 
-**Performance and Deployment**
+#### Performance and Deployment
 
 - **Compiled nature** makes it very fast and easy to deploy
-- Single binary deployment - just put it in a Docker container and ship to serverless instances
+- Single binary deployment - just put it in a Docker container and ship to
+  serverless instances
 - No runtime dependencies needed in production
 
-**No Dependency Hell**
+#### No Dependency Hell
 
-- Unlike JavaScript/Node.js ecosystems, Go avoids the complex dependency management issues
+- Unlike JavaScript/Node.js ecosystems, Go avoids the complex dependency
+  management issues
 - Cleaner, more predictable dependency resolution
 
 ### Excellent for Web Development
 
-**Outstanding Standard Library**
+#### Outstanding Standard Library
 
-- The `net` and `net/http` packages provide robust, battle-tested foundations for web services
+- The `net` and `net/http` packages provide robust, battle-tested foundations
+  for web services
 - Built-in HTTP server capabilities without external dependencies
 - Comprehensive networking primitives
 
-**Superior Concurrency Model**
+#### Superior Concurrency Model
 
-- Go's goroutines and channels make handling concurrent requests elegant and efficient
+- Go's goroutines and channels make handling concurrent requests elegant and
+  efficient
 - Perfect for web servers that need to handle many simultaneous connections
 - Built-in concurrency primitives reduce complexity
 
 ### Practical Development Advantages
 
-**Fast Compilation**
+#### Fast Compilation
 
 - Quick build times improve development workflow
 - Immediate feedback during development
 
-**Strong Typing with Simplicity**
+#### Strong Typing with Simplicity
 
 - Catches errors at compile time
 - Interfaces provide flexibility without complexity
 - Simple but powerful type system
 
-**Production Ready**
+#### Production Ready
 
 - Designed for building scalable, reliable systems
 - Excellent tooling ecosystem (testing, profiling, etc.)
@@ -148,56 +179,84 @@ The documents show Go excels at:
 - **Authentication and security** implementations
 - **Graceful error handling** and recovery
 
-As one document puts it: _"I think you have to choose the tool that is right for the job, and all the tools have their own problems. You just got to choose the tool that has the less problems for the problem that you have."_
+As one document puts it: _"I think you have to choose the tool that is right
+for the job, and all the tools have their own problems. You just got to
+choose the tool that has the less problems for the problem that you have."_
 
-For building robust, scalable web APIs, Go provides an excellent balance of simplicity, performance, and powerful built-in capabilities that make it an ideal choice.
+For building robust, scalable web APIs, Go provides an excellent balance of
+simplicity, performance, and powerful built-in capabilities that make it an
+ideal choice.
 
 ## External Resources
 
-Based on the documents provided, here are all the external resources mentioned:
+Based on the documents provided, here are all the external resources
+mentioned:
 
 ### Books
 
-- [**The Clean Architecture**](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164) by Robert Martin
-- [**Patterns of Enterprise Application Architecture**](https://www.amazon.com/Patterns-Enterprise-Application-Architecture-Martin/dp/0321127420) by Martin Fowler
-- [**Refactoring**](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599) by Martin Fowler
+- [**The Clean Architecture**](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164)
+  by Robert Martin
+- [**Patterns of Enterprise Application Architecture**](https://www.amazon.com/Patterns-Enterprise-Application-Architecture-Martin/dp/0321127420)
+  by Martin Fowler
+- [**Refactoring**](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599)
+  by Martin Fowler
 
 ### Documentation & Specifications
 
-- [**The 12-Factor App**](https://12factor.net/) - Set of 12 principles for building web applications
-- [**REST (Representational State Transfer)**](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) - Original dissertation by Roy Fielding
-- [**Conventional Commits**](https://www.conventionalcommits.org/) - Convention for commit message formatting
-- [**Go documentation**](https://golang.org/doc/) - Official Go language documentation
-- [**Mozilla documentation**](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) - For CORS and web standards
-- [**AWS CORS documentation**](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html) - For CORS best practices
-- [**DigitalOcean OAuth article**](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) - OAuth implementation guide
-- [**SendGrid documentation**](https://docs.sendgrid.com/) - Email service documentation
-- [**Mailtrap documentation**](https://help.mailtrap.io/) - Alternative email service documentation
+- [**The 12-Factor App**](https://12factor.net/) - Set of 12 principles for
+  building web applications
+- [**REST (Representational State Transfer)**](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) -
+  Original dissertation by Roy Fielding
+- [**Conventional Commits**](https://www.conventionalcommits.org/) -
+  Convention for commit message formatting
+- [**Go documentation**](https://golang.org/doc/) - Official Go language
+  documentation
+- [**Mozilla documentation**](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) -
+  For CORS and web standards
+- [**AWS CORS documentation**](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html) -
+  For CORS best practices
+- [**DigitalOcean OAuth article**](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) -
+  OAuth implementation guide
+- [**SendGrid documentation**](https://docs.sendgrid.com/) - Email service
+  documentation
+- [**Mailtrap documentation**](https://help.mailtrap.io/) - Alternative email
+  service documentation
 
 ### Online Resources & Articles
 
-- [**Learn Go with Tests**](https://quii.gitbook.io/learn-go-with-tests/) - Go testing resource
-- [**Three Dots Labs**](https://threedots.tech/) - Repository pattern implementation series
-- **JWT security articles** - Referenced for JWT best practices and vulnerabilities
-- [**"Please Stop Using Local Storage"**](https://dev.to/rdegges/please-stop-using-local-storage-1i04) - Article about JWT storage concerns
-- **Critical vulnerabilities in JWT implementations** - Security considerations
+- [**Learn Go with Tests**](https://quii.gitbook.io/learn-go-with-tests/) -
+  Go testing resource
+- [**Three Dots Labs**](https://threedots.tech/) - Repository pattern
+  implementation series
+- **JWT security articles** - Referenced for JWT best practices and
+  vulnerabilities
+- [**"Please Stop Using Local Storage"**](https://dev.to/rdegges/please-stop-using-local-storage-1i04) -
+  Article about JWT storage concerns
+- **Critical vulnerabilities in JWT implementations** - Security
+  considerations
 - [**jwt.io**](https://jwt.io/) - JWT token decoder website
 
 ### Tools & Packages
 
 #### Go Packages
 
-- [**Gin**](https://github.com/gin-gonic/gin) / [**Chi**](https://github.com/go-chi/chi) - HTTP routing libraries
+- [**Gin**](https://github.com/gin-gonic/gin) /
+  [**Chi**](https://github.com/go-chi/chi) - HTTP routing libraries
 - [**Zap logger**](https://github.com/uber-go/zap) - Uber's logging library
 - [**Go-redis**](https://github.com/go-redis/redis) - Redis client for Go
 - [**Testify**](https://github.com/stretchr/testify) - Testing toolkit
 - [**SQLx**](https://github.com/jmoiron/sqlx) - SQL extensions for Go
-- [**SQL Boiler**](https://github.com/volatiletech/sqlboiler) - Database toolkit
+- [**SQL Boiler**](https://github.com/volatiletech/sqlboiler) - Database
+  toolkit
 - [**GORM**](https://gorm.io/) - Go ORM
-- [**Swaggo**](https://github.com/swaggo/swag) - Swagger documentation generator
-- [**Golang-migrate**](https://github.com/golang-migrate/migrate) - Database migration tool
-- [**UUID package**](https://github.com/google/uuid) - From Google for generating UUIDs
-- [**bcrypt**](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Password hashing
+- [**Swaggo**](https://github.com/swaggo/swag) - Swagger documentation
+  generator
+- [**Golang-migrate**](https://github.com/golang-migrate/migrate) - Database
+  migration tool
+- [**UUID package**](https://github.com/google/uuid) - From Google for
+  generating UUIDs
+- [**bcrypt**](https://pkg.go.dev/golang.org/x/crypto/bcrypt) - Password
+  hashing
 - [**Postgres driver**](https://github.com/lib/pq) - Database driver
 - [**JWT-go v5**](https://github.com/golang-jwt/jwt) - JWT implementation
 
@@ -206,8 +265,10 @@ Based on the documents provided, here are all the external resources mentioned:
 - [**SendGrid**](https://sendgrid.com/) - Email delivery service
 - [**Mailtrap**](https://mailtrap.io/) - Email testing service
 - [**Twilio**](https://www.twilio.com/) - SMS/communication service
-- [**Supabase**](https://supabase.com/) - Database hosting (free tier mentioned)
-- [**Google Cloud**](https://cloud.google.com/) - Cloud platform for deployment
+- [**Supabase**](https://supabase.com/) - Database hosting (free tier
+  mentioned)
+- [**Google Cloud**](https://cloud.google.com/) - Cloud platform for
+  deployment
   - [Cloud Run](https://cloud.google.com/run)
   - [Cloud Build](https://cloud.google.com/build)
   - [Artifact Registry](https://cloud.google.com/artifact-registry)
@@ -218,11 +279,14 @@ Based on the documents provided, here are all the external resources mentioned:
 #### Development Tools
 
 - [**Docker**](https://www.docker.com/) - Containerization
-- [**Docker Compose**](https://docs.docker.com/compose/) - Multi-container orchestration
+- [**Docker Compose**](https://docs.docker.com/compose/) - Multi-container
+  orchestration
 - [**GitHub Actions**](https://github.com/features/actions) - CI/CD automation
 - [**Swagger/OpenAPI**](https://swagger.io/) - API documentation
-- [**Autocannon**](https://github.com/mcollina/autocannon) - HTTP benchmarking tool
-- [**Redis Commander**](https://github.com/joeferner/redis-commander) - Redis UI tool
+- [**Autocannon**](https://github.com/mcollina/autocannon) - HTTP
+  benchmarking tool
+- [**Redis Commander**](https://github.com/joeferner/redis-commander) - Redis
+  UI tool
 - [**VS Code**](https://code.visualstudio.com/) - Code editor
 - [**Lazy Git**](https://github.com/jesseduffield/lazygit) - Git CLI tool
 
@@ -262,7 +326,6 @@ flowchart LR
 
     %% Final endpoint
     CLOUD --> HTTPS[HTTPS]
-
 ```
 
 ## 1. Initial Setup and Project Structure
@@ -277,7 +340,7 @@ go mod init social
 
 **Create folder structure:**
 
-```
+```text
 ├── bin/
 ├── cmd/
 │   ├── api/
@@ -362,7 +425,8 @@ func (app *application) mount() http.Handler {
     return r
 }
 
-func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) healthCheckHandler(w http.ResponseWriter,
+    r *http.Request) {
     w.Write([]byte("OK"))
 }
 ```
@@ -567,7 +631,8 @@ type password struct {
 }
 
 func (p *password) Set(plaintextPassword string) error {
-    hash, err := bcrypt.GenerateFromPassword([]byte(plaintextPassword), bcrypt.DefaultCost)
+    hash, err := bcrypt.GenerateFromPassword([]byte(plaintextPassword),
+        bcrypt.DefaultCost)
     if err != nil {
         return err
     }
@@ -589,7 +654,8 @@ func (s *UserStore) Create(ctx context.Context, user *User) error {
     ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
     defer cancel()
 
-    err := s.db.QueryRowContext(ctx, query, user.Username, user.Email, user.Password.hash).Scan(
+    err := s.db.QueryRowContext(ctx, query, user.Username, user.Email,
+        user.Password.hash).Scan(
         &user.ID,
         &user.CreatedAt,
     )
@@ -687,7 +753,8 @@ type CreateUserPayload struct {
     Password string `json:"password" validate:"required,min=3,max=72"`
 }
 
-func (app *application) createUserHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createUserHandler(w http.ResponseWriter,
+    r *http.Request) {
     var payload CreateUserPayload
     if err := readJSON(w, r, &payload); err != nil {
         writeJSONError(w, http.StatusBadRequest, err.Error())
@@ -773,7 +840,8 @@ func (a *JWTAuthenticator) GenerateToken(claims jwt.Claims) (string, error) {
 **Create token endpoint:**
 
 ```go
-func (app *application) createTokenHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createTokenHandler(w http.ResponseWriter,
+    r *http.Request) {
     type TokenPayload struct {
         Email    string `json:"email" validate:"required,email"`
         Password string `json:"password" validate:"required"`
@@ -808,7 +876,8 @@ func (app *application) createTokenHandler(w http.ResponseWriter, r *http.Reques
         return
     }
 
-    if err := writeJSON(w, http.StatusCreated, map[string]string{"token": token}); err != nil {
+    if err := writeJSON(w, http.StatusCreated,
+        map[string]string{"token": token}); err != nil {
         writeJSONError(w, http.StatusInternalServerError, "Internal server error")
         return
     }
@@ -824,13 +893,15 @@ func (app *application) AuthTokenMiddleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         authHeader := r.Header.Get("Authorization")
         if authHeader == "" {
-            writeJSONError(w, http.StatusUnauthorized, "Authorization header missing")
+            writeJSONError(w, http.StatusUnauthorized,
+                "Authorization header missing")
             return
         }
 
         parts := strings.Split(authHeader, " ")
         if len(parts) != 2 || parts[0] != "Bearer" {
-            writeJSONError(w, http.StatusUnauthorized, "Authorization header malformed")
+            writeJSONError(w, http.StatusUnauthorized,
+                "Authorization header malformed")
             return
         }
 
@@ -881,7 +952,8 @@ CREATE TABLE IF NOT EXISTS posts (
 **Create posts handlers:**
 
 ```go
-func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createPostHandler(w http.ResponseWriter,
+    r *http.Request) {
     type CreatePostPayload struct {
         Title   string `json:"title" validate:"required,max=100"`
         Content string `json:"content" validate:"required"`
@@ -1153,9 +1225,9 @@ make test
 go run cmd/api/*.go
 ```
 
----
+## Additional Setup Instructions
 
-## 1. Environment Variables Setup
+### 1. Environment Variables Setup
 
 **Create environment variable handler:**
 
@@ -1168,7 +1240,10 @@ mkdir -p internal/env
 // internal/env/env.go
 package env
 
-import "os"
+import (
+    "os"
+    "strconv"
+)
 
 func GetString(key, fallback string) string {
     if value, ok := os.LookupEnv(key); ok {
@@ -1195,7 +1270,7 @@ echo 'export SERVER_ADDR=":3000"' > .envrc
 direnv allow
 ```
 
-## 2. Database Connection Pool Configuration
+### 2. Database Connection Pool Configuration
 
 **Configure database in main application:**
 
@@ -1217,7 +1292,8 @@ func main() {
     cfg := config{
         addr: env.GetString("SERVER_ADDR", ":8080"),
         db: dbConfig{
-            addr:         env.GetString("DB_ADDR", "postgres://user:password@localhost/socialnetwork?sslmode=disable"),
+            addr:         env.GetString("DB_ADDR",
+                "postgres://user:password@localhost/socialnetwork?sslmode=disable"),
             maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 30),
             maxIdleConns: env.GetInt("DB_MAX_IDLE_CONNS", 30),
             maxIdleTime:  env.GetString("DB_MAX_IDLE_TIME", "15m"),
@@ -1239,7 +1315,8 @@ import (
     _ "github.com/lib/pq"
 )
 
-func New(addr string, maxOpenConns, maxIdleConns int, maxIdleTime string) (*sql.DB, error) {
+func New(addr string, maxOpenConns, maxIdleConns int,
+    maxIdleTime string) (*sql.DB, error) {
     db, err := sql.Open("postgres", addr)
     if err != nil {
         return nil, err
@@ -1265,7 +1342,7 @@ func New(addr string, maxOpenConns, maxIdleConns int, maxIdleTime string) (*sql.
 }
 ```
 
-## 3. Docker Compose for Database
+### 3. Docker Compose for Database
 
 **Create docker-compose.yaml:**
 
@@ -1293,7 +1370,7 @@ volumes:
 docker-compose up -d
 ```
 
-## 4. Hot Reloading Setup
+### 4. Hot Reloading Setup
 
 **Install and configure Air:**
 
@@ -1322,7 +1399,7 @@ air init
 air
 ```
 
-## 5. SQL Migrations
+### 5. SQL Migrations
 
 **Install migrate tool:**
 
@@ -1404,7 +1481,7 @@ FOREIGN KEY (user_id) REFERENCES users (id);
 make migrate-up
 ```
 
-## 6. JSON Encoding/Decoding and Error Handling
+### 6. JSON Encoding/Decoding and Error Handling
 
 **Create internal errors package:**
 
@@ -1421,22 +1498,28 @@ type application struct {
     // dependencies
 }
 
-func (app *application) internalServerError(w http.ResponseWriter, r *http.Request, err error) {
-    log.Printf("internal server error: %s path: %s error: %v", r.Method, r.URL.Path, err)
+func (app *application) internalServerError(w http.ResponseWriter,
+    r *http.Request, err error) {
+    log.Printf("internal server error: %s path: %s error: %v",
+        r.Method, r.URL.Path, err)
 
     response := map[string]string{"error": "the server encountered a problem"}
     app.writeJSON(w, http.StatusInternalServerError, response)
 }
 
-func (app *application) badRequestResponse(w http.ResponseWriter, r *http.Request, err error) {
-    log.Printf("bad request error: %s path: %s error: %v", r.Method, r.URL.Path, err)
+func (app *application) badRequestResponse(w http.ResponseWriter,
+    r *http.Request, err error) {
+    log.Printf("bad request error: %s path: %s error: %v",
+        r.Method, r.URL.Path, err)
 
     response := map[string]string{"error": err.Error()}
     app.writeJSON(w, http.StatusBadRequest, response)
 }
 
-func (app *application) notFoundResponse(w http.ResponseWriter, r *http.Request, err error) {
-    log.Printf("not found error: %s path: %s error: %v", r.Method, r.URL.Path, err)
+func (app *application) notFoundResponse(w http.ResponseWriter,
+    r *http.Request, err error) {
+    log.Printf("not found error: %s path: %s error: %v",
+        r.Method, r.URL.Path, err)
 
     response := map[string]string{"error": "resource not found"}
     app.writeJSON(w, http.StatusNotFound, response)
@@ -1460,12 +1543,13 @@ func WriteJSON(w http.ResponseWriter, status int, data interface{}) error {
     return json.NewEncoder(w).Encode(data)
 }
 
-func ReadJSON(w http.ResponseWriter, r *http.Request, data interface{}) error {
+func ReadJSON(w http.ResponseWriter, r *http.Request,
+    data interface{}) error {
     return json.NewDecoder(r.Body).Decode(data)
 }
 ```
 
-## 7. HTTP Payload Validation
+### 7. HTTP Payload Validation
 
 **Install validation package:**
 
@@ -1500,7 +1584,8 @@ type CreatePostPayload struct {
     Tags    []string `json:"tags"`
 }
 
-func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
+func (app *application) createPostHandler(w http.ResponseWriter,
+    r *http.Request) {
     var payload CreatePostPayload
 
     if err := json.ReadJSON(w, r, &payload); err != nil {
@@ -1519,7 +1604,7 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 }
 ```
 
-## 8. Standardized JSON Responses
+### 8. Standardized JSON Responses
 
 **Create response wrapper:**
 
@@ -1527,13 +1612,14 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 // Update internal/json/json.go
 type Envelope map[string]interface{}
 
-func (app *application) writeJSONResponse(w http.ResponseWriter, status int, data interface{}) {
+func (app *application) writeJSONResponse(w http.ResponseWriter,
+    status int, data interface{}) {
     envelope := Envelope{"data": data}
     WriteJSON(w, status, envelope)
 }
 ```
 
-## 9. Database Query Timeouts
+### 9. Database Query Timeouts
 
 **Add context timeouts to store methods:**
 
@@ -1545,7 +1631,8 @@ func (s *PostStore) GetByID(ctx context.Context, id int64) (*Post, error) {
     ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
     defer cancel()
 
-    query := `SELECT id, title, content, user_id, created_at FROM posts WHERE id = $1`
+    query := `SELECT id, title, content, user_id, created_at
+              FROM posts WHERE id = $1`
 
     var post Post
     err := s.db.QueryRowContext(ctx, query, id).Scan(
@@ -1564,7 +1651,7 @@ func (s *PostStore) GetByID(ctx context.Context, id int64) (*Post, error) {
 }
 ```
 
-## 10. Database Seeding
+### 10. Database Seeding
 
 **Create seed script:**
 
@@ -1580,7 +1667,8 @@ import (
 )
 
 func main() {
-    addr := env.GetString("DB_ADDR", "postgres://admin:adminpassword@localhost/socialnetwork?sslmode=disable")
+    addr := env.GetString("DB_ADDR",
+        "postgres://admin:adminpassword@localhost/socialnetwork?sslmode=disable")
 
     conn, err := db.New(addr, 3, 3, "15m")
     if err != nil {
