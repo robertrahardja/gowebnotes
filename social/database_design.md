@@ -1,7 +1,6 @@
 # Database Design
 
 - One user can have many posts (one-to-many from users to posts)
-
 - One post can only have one user (each post belongs to exactly one user)
 
 ```mermaid
@@ -13,7 +12,6 @@ erDiagram
         string username "unique"
         string email "unique"
     }
-
     posts {
         int id PK
         string title
@@ -21,7 +19,6 @@ erDiagram
         int user_id FK
         string[] tags
     }
-
     users ||--o{ posts : "id in users to user_id in posts"
 ```
 
@@ -29,44 +26,77 @@ erDiagram
 
 ### Sequential Migration Execution
 
-When the instructor mentions storing migrations and running them sequentially, he's referring to the **migration management system** that ensures database schema changes are applied in the correct order. Here's how it works:
+#### Database Tool
 
-#### Migration Files Storage
+Golang migration
 
-- **Migration files are stored** in a dedicated `migrations` folder within the project structure
-- Each migration file has a **timestamp or version number** prefix to ensure proper ordering
-- Files are named descriptively (e.g., "001_add_roles_table.up.sql", "002_alter_users_with_roles.up.sql")
+## Migrate Commands
 
-#### Sequential Execution Process
+### Create Migration
 
-**1. Makefile Script Execution:**
-
-- There's a **Makefile command** (`make migrate up`) that runs migrations against the database
-- The script references the `DB_ADDRESS` environment variable to connect to the target database
-- Migrations are executed **one by one** in chronological order
-
-**2. Why Sequential Order Matters:**
-
-```sql
--- Migration 1: Create roles table first
-CREATE TABLE roles (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    level INTEGER NOT NULL DEFAULT 0
-);
-
--- Migration 2: Add role_id to users table (depends on roles existing)
-ALTER TABLE users ADD COLUMN role_id INTEGER REFERENCES roles(id);
+```bash
+migrate create -seq -ext sql -dir ./cmd/migrate/migrations create_users
 ```
 
-#### Key Benefits of Sequential Execution
+**Generates:**
 
-**Dependency Management:** Later migrations can depend on earlier ones (like adding foreign keys to tables created in previous migrations)
+```text
+000001_create_users.up.sql
+000001_create_users.down.sql
+```
 
-**Production Safety:** In production environments with existing data, you can't just delete and recreate - you must **carefully alter existing structures** step by step
+### Parameters
 
-**Rollback Capability:** Each migration has an "up" and "down" version, allowing you to roll back changes in reverse order if needed
+- `-seq` - Sequential numbering
+- `-ext sql` - SQL file extension
+- `-dir` - Output directory
 
-**State Tracking:** The migration system tracks which migrations have been applied, preventing duplicate execution
+## Database Migration Tool Summary
 
-This sequential approach ensures that database schema changes are predictable, reversible, and safe for both development and production environments.
+### Why Sequential Migrations Are Essential
+
+Sequential database migrations solve a critical problem: **managing database
+schema changes safely across different environments**. Without this approach,
+you'd face chaos when multiple developers make conflicting database changes or
+when deploying to production with existing data.
+
+The core reasons this matters:
+
+- **Dependency management** - Later changes often depend on earlier ones (you
+  can't add a foreign key to a non-existent table)
+- **Production safety** - You can't just wipe and recreate production
+  databases; changes must be incremental
+- **Team coordination** - Multiple developers need a consistent way to apply
+  the same schema changes
+- **Rollback capability** - When things go wrong, you need to undo changes in
+  reverse order
+
+### How the System Works
+
+**File Organization:**
+
+- Migration files live in a dedicated `migrations` folder
+- Each file gets a timestamp/version prefix (001, 002, 003...)
+- Descriptive naming like "001_add_roles_table.up.sql"
+
+**Execution Process:**
+
+1. **Makefile command** (`make migrate up`) triggers the process
+2. **Database connection** uses the `DB_ADDRESS` environment variable
+3. **Sequential execution** - the system runs migrations in chronological order
+4. **State tracking** - the database remembers which migrations have been
+   applied
+
+**Practical Example:**
+
+```sql
+Migration 1: CREATE TABLE roles (...)
+Migration 2: ALTER TABLE users ADD COLUMN role_id REFERENCES roles(id)
+```
+
+Migration 2 would fail if run before Migration 1 because it references a table
+that doesn't exist yet.
+
+The beauty is in the simplicity - by enforcing order and tracking state, this
+system prevents the database schema chaos that would otherwise plague
+multi-developer projects and production deployments.
