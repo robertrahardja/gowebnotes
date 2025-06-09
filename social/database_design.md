@@ -52,6 +52,27 @@ migrate create -seq -ext sql -dir ./cmd/migrate/migrations create_users
 000001_create_users.down.sql
 ```
 
+### Database migration
+
+```bash
+migrate -path=./cmd/migrate/migrations \
+-database="postgres://admin:adminpassword@localhost:5432/socialnetwork?sslmode=disable"
+
+```
+
+**Parameters**:
+
+- `-path=./cmd/migrate/migrations` - Points to the directory containing migration files
+- `-database="postgres://..."` - PostgreSQL connection string with:
+  - Username: `admin`
+  - Password: `adminpassword`
+  - Host: `localhost:5432`
+  - Database: `social`
+  - SSL disabled
+- `up` - Runs pending migrations forward (applies new schema changes)
+
+**Purpose**: Applies all pending database schema migrations to bring the "social" database up to the latest version defined in the migration files.
+
 ### Parameters
 
 - `-seq` - Sequential numbering
