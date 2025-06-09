@@ -28,7 +28,14 @@ erDiagram
 
 #### Database Tool
 
-Golang migration
+##### - Golang migration
+
+##### - citext extension
+
+The citext extension in PostgreSQL provides a case-insensitive text data type.
+When you use citext, string comparisons are performed without regard to case,
+making it useful for storing data like email addresses, usernames,
+or other text fields where case shouldn't matter for equality checks.
 
 ## Migrate Commands
 
