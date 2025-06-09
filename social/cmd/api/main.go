@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"social/internal/db"
 	"social/internal/env"
 	"social/internal/store"
 )
@@ -17,7 +18,18 @@ func main() {
 		},
 	}
 
-	store := store.NewPostgresStorage(nil)
+	// Main Database
+	db, err := db.New(
+		cfg.db.addr,
+		cfg.db.maxOpenConns,
+		cfg.db.maxIdleConns,
+		cfg.db.maxIdleTime,
+	)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	store := store.NewPostgresStorage(db)
 
 	app := &application{
 		// app configs

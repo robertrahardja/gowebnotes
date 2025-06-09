@@ -6,6 +6,7 @@ flowchart TD
 
     App -->|store:| Storage
     App -->|config:| Config
+    App -->|Uses mount to get | Router
 
     Config --> DbConfig[dbConfig struct]
     Config --> Port[Port Addr from env]
@@ -14,7 +15,13 @@ flowchart TD
     DbConfig --> maxIdleConns
     DbConfig --> maxIdleTimes
 
+    Addr --> db
+    maxOpenConns --> db
+    maxIdleConns --> db
+    maxIdleTimes --> db
 
+
+    db -->|Uses parameters from above to give db connection|Storage
     Storage --> PostStore[PostStore struct]
     Storage --> UserStore[UserStore struct]
 
