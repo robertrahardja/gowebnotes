@@ -98,4 +98,6 @@ func main() {
 	} else {
 		fmt.Printf("User: %+v\n", user)
 	}
+	// Now app is used, so no "unused variable" error
+	fmt.Printf("App store type: %T\n", app.store)
 }
