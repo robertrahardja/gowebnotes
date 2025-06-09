@@ -20,8 +20,10 @@ func main() {
 	store := store.NewPostgresStorage(nil)
 
 	app := &application{
+		// app configs
 		config: cfg,
-		store:  store,
+		// how to interact with DB
+		store: store,
 	}
 
 	mux := app.mount()
