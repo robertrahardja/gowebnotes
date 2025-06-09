@@ -3,13 +3,21 @@ testdata_dir = "testdata"
 # tmp_dir = "tmp"
 tmp_dir = "bin"
 
+# Switched from using a tmp directory to a bin directory for build outputs
+# Build command now specifically targets ./cmd/api as the sourceinstead
+# instead of the current directory (.)
+# The executable is now built as ./bin/main instead of ./tmp/main
+# The exclusion list has been updated to ignore the new bin directory instead of tmp
 [build]
   args_bin = []
   # bin = "./tmp/main"
-  bin = "./tmp/bin"
-  cmd = "go build -o ./tmp/main ."
+  # bin = "./tmp/bin"
+  # cmd = "go build -o ./tmp/main ."
+  bin = "./bin/main"
+  cmd = "go build -o ./bin/main ./cmd/api"
   delay = 1000
-  exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  # exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  exclude_dir = ["assets", "bin", "vendor", "testdata"]
   exclude_file = []
   exclude_regex = ["_test.go"]
   exclude_unchanged = false
