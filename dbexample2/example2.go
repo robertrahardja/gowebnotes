@@ -46,8 +46,33 @@ type InMemRepository struct {
 	users []User
 }
 
+// func (r *InMemRepository) GetByID(id int) (*User, error) {
+// 	return nil, nil
+// }
+
+// ADD THIS: Missing UserService struct and methods
+
+type UserService struct {
+	repo UserRepository
+}
+
+func NewUserService(repo UserRepository) *UserService {
+	return &UserService{repo: repo}
+}
+
+func (s *UserService) GetUserByID(id int) (*User, error) {
+	return s.repo.GetByID(id)
+}
+
+// ADD THIS: Complete the InMemRepository implementation
 func (r *InMemRepository) GetByID(id int) (*User, error) {
-	return nil, nil
+	// Simple implementation to avoid nil return
+	for _, user := range r.users {
+		if user.ID == fmt.Sprintf("%d", id) {
+			return &user, nil
+		}
+	}
+	return nil, fmt.Errorf("user not found")
 }
 
 func main() {
@@ -63,7 +88,7 @@ func main() {
 	userService := NewUserService(userRepository)
 
 	app := &application{
-		store: UserRepository,
+		store: userRepository,
 	}
 
 	user, err := userService.GetUserByID(1)
