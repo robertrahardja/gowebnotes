@@ -1,9 +1,8 @@
 # This line includes the .envrc file, which typically contains environment variables. 
-# The .envrc file is commonly used with tools like direnv to automatically load 
-# environment variables when you enter the project directory. 
 # Variables like DB_ADDR (database address) would be defined there.
 include .envrc
 
+MIGRATIONS_PATH = ./cmd/migrate/migrations
 
 # Each target follows this pattern:
 # .PHONY: target-name
@@ -12,8 +11,8 @@ include .envrc
 #
 # Usage
 # You'd run these with commands like make test, make migrate-up, or make migration create_users_table.
+#  
 
-MIGRATIONS_PATH = ./cmd/migrate/migrations
 
 # .PHONY: - Declares that the target name isn't a file.
 # This prevents Make from looking for actual files with those names 
@@ -21,11 +20,13 @@ MIGRATIONS_PATH = ./cmd/migrate/migrations
 .PHONY: test
 # test: - Runs Go tests with verbose output (-v) for all packages (./...)
 test:
+# Always USE TABS not spaces
 # @ prefix - Suppresses echoing the command to the terminal. Without @, Make would print each command before executing it.
 	@go test -v ./...
 
 # migration: - Creates new database migration files using the migrate tool:
-.PHONY: migrate-create
+# .PHONY: migrate-create
+.PHONY: migration 
 migration:
 # -seq creates sequential numbering
 # -ext sql sets file extension to .sql
