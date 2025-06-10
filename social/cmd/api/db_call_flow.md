@@ -4,26 +4,29 @@
 flowchart TD
 
 
-    App -->|store:| Storage
+    App -->|store:| NewPostgresStorage
     App -->|config:| Config
-    App -->|Uses mount to get | Router
+    App --> Mount[App.mount]
+    App --> Run[App.run]
+    Run --> Mount
+    Mount --> Router
 
     Config --> DbConfig[dbConfig struct]
-    Config --> Port[Port Addr from env]
-    DbConfig --> Addr
-    DbConfig --> maxOpenConns
-    DbConfig --> maxIdleConns
-    DbConfig --> maxIdleTimes
+    Config -->|from env| Port[Port Addr]
+    DbConfig -->|from env| Addr
+    DbConfig -->|from env| maxOpenConns
+    DbConfig -->|from env| maxIdleConns
+    DbConfig -->|from env| maxIdleTimes
 
-    Addr --> db
-    maxOpenConns --> db
-    maxIdleConns --> db
-    maxIdleTimes --> db
+    Addr --> db.new
+    maxOpenConns --> db.new
+    maxIdleConns --> db.new
+    maxIdleTimes --> db.new
 
-
-    db -->|Uses parameters from above to give db connection|Storage
-    Storage --> PostStore[PostStore struct]
-    Storage --> UserStore[UserStore struct]
+    db --> db.new
+    db --> NewPostgresStorage
+    NewPostgresStorage --> PostStore[PostStore struct]
+    NewPostgresStorage --> UserStore[UserStore struct]
 
     PostStore --> PostModel[Post struct]
     UserStore --> UserModel[User struct]

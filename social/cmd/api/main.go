@@ -28,6 +28,8 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	defer db.Close()
+	log.Printf("Database pool connection established")
 
 	store := store.NewPostgresStorage(db)
 
