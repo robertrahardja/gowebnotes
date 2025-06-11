@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
+	"errors"
 
 	"github.com/lib/pq"
 )
@@ -73,4 +74,40 @@ func (s *PostStore) Create(ctx context.Context, post *Post) error {
 	}
 
 	return nil
+}
+
+func (s *PostStore) GetByID(ctx context.Context, id int64) (*Post, error) {
+	query := `
+		SELECT id, user_id, title, content, created_at,  updated_at, tags 
+		FROM posts
+		WHERE id = $1
+	`
+	// ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	// defer cancel()
+
+	var post Post
+
+	// 	QueryRowContext() executes the SQL query and expects exactly one row back.
+	// 	It immediately calls Scan() to copy the column values from that row into the provided variables (&post.ID, &post.UserID, etc.).
+	// If the query finds no rows, Scan() returns sql.ErrNoRows. If it finds a row, Scan() populates your variables with the column data. Any database errors during execution get returned as err.
+	// It's a one-shot operation: run query → get single row → fill variables → done.
+	err := s.db.QueryRowContext(ctx, query, id).Scan(
+		&post.ID,
+		&post.UserID,
+		&post.Title,
+		&post.Content,
+		&post.CreatedAt,
+		&post.UpdatedAt,
+		pq.Array(post.Tags),
+	)
+	if err != nil {
+		switch {
+		case errors.Is(err, sql.ErrNoRows):
+			return nil, ErrNotFound
+		default:
+			return nil, err
+		}
+	}
+
+	return &post, nil
 }
