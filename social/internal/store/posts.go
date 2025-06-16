@@ -111,3 +111,68 @@ func (s *PostStore) GetByID(ctx context.Context, id int64) (*Post, error) {
 
 	return &post, nil
 }
+
+func (s *PostStore) Delete(ctx context.Context, postID int64) error {
+	query := `DELETE FROM posts WHERE id = $1`
+
+	// ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	// defer cancel()
+
+	res, err := s.db.ExecContext(ctx, query, postID)
+	if err != nil {
+		return err
+	}
+
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rows == 0 {
+		return ErrNotFound
+	}
+
+	return nil
+}
+
+func (s *PostStore) Update(ctx context.Context, post *Post) error {
+	// query := `
+	// 	UPDATE posts
+	// 	SET title = $1, content = $2, version = version + 1
+	// 	WHERE id = $3 AND version = $4
+	// 	RETURNING version
+	// `
+	query := `
+		UPDATE posts
+		SET title = $1, content = $2
+		WHERE id = $3 
+
+	`
+
+	_, err := s.db.ExecContext(ctx, query, post.Title, post.Content, post.ID)
+	if err != nil {
+		return err
+	}
+
+	// ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	// defer cancel()
+	//
+	// err := s.db.QueryRowContext(
+	// 	ctx,
+	// 	query,
+	// 	post.Title,
+	// 	post.Content,
+	// 	post.ID,
+	// 	post.Version,
+	// ).Scan(&post.Version)
+	// if err != nil {
+	// 	switch {
+	// 	case errors.Is(err, sql.ErrNoRows):
+	// 		return ErrNotFound
+	// 	default:
+	// 		return err
+	// 	}
+	// }
+
+	return nil
+}
