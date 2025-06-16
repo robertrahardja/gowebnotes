@@ -34,8 +34,6 @@ func (app *application) mount() http.Handler {
 	// mux.HandleFunc("GET /v1/health", app.healthCheckHandler)
 
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Use(middleware.Recoverer)
 
 	// A good base middleware stack
 	r.Use(middleware.RequestID)
@@ -64,6 +62,30 @@ func (app *application) mount() http.Handler {
 				r.Patch("/", app.updatePostHandler)
 			})
 		})
+		
+		// TODO: Implement user routes when handlers are ready
+		// r.Route("/users", func(r chi.Router) {
+		// 	r.Put("/activate/{token}", app.activateUserHandler)
+		//
+		// 	r.Route("/{userID}", func(r chi.Router) {
+		// 		r.Use(app.AuthTokenMiddleware)
+		//
+		// 		r.Get("/", app.getUserHandler)
+		// 		r.Put("/follow", app.followUserHandler)
+		// 		r.Put("/unfollow", app.unfollowUserHandler)
+		// 	})
+		//
+		// 	r.Group(func(r chi.Router) {
+		// 		r.Use(app.AuthTokenMiddleware)
+		// 		r.Get("/feed", app.getUserFeedHandler)
+		// 	})
+		// })
+
+		// TODO: Implement authentication routes
+		// r.Route("/authentication", func(r chi.Router) {
+		// 	r.Post("/user", app.registerUserHandler)
+		// 	r.Post("/token", app.createTokenHandler)
+		// })
 	})
 
 	// return mux
