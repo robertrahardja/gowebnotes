@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"social/docs"
 	"social/internal/store"
 	"syscall"
 	"time"
@@ -15,14 +16,14 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
-	"social/docs"
+	"go.uber.org/zap"
 )
 
 type application struct {
 	config config
 	store  store.Storage
 	// cacheStorage  cache.Storage
-	// logger *zap.SugaredLogger
+	logger *zap.SugaredLogger
 	// mailer        mailer.Client
 	// authenticator auth.Authenticator
 	// rateLimiter   ratelimiter.Limiter
