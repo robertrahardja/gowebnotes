@@ -9,6 +9,24 @@ import (
 
 const version = "0.0.1"
 
+//	@title			GopherSocial API
+//	@description	API for GopherSocial, a social network for gohpers
+//	@termsOfService	http://swagger.io/terms/
+
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
+
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @BasePath					/v1
+//
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
+// @description
+
 func main() {
 	cfg := config{
 		addr: env.GetString("ADDR", ":8080"),
@@ -44,5 +62,10 @@ func main() {
 	}
 
 	mux := app.mount()
-	log.Fatal(app.run(mux))
+	log.Printf("Starting server...")
+	if err := app.run(mux); err != nil {
+		log.Printf("Server error: %v", err)
+		log.Fatal(err)
+	}
+	log.Printf("Server stopped gracefully")
 }
